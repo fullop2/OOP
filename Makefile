@@ -1,6 +1,6 @@
 CXX = g++
 
-TARGET = main
+TARGET = test
 
 OBJECTS = main.o print.o student_id.o
 

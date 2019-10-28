@@ -25,7 +25,8 @@ Object* unique_immut::get() const{
     return _mgr == nullptr ? nullptr : _mgr->ptr;
 }
 void unique_immut::release(){
-    delete _mgr;
+    if(_mgr != nullptr)
+		delete _mgr;
     _mgr = nullptr;
 }
 
@@ -58,15 +59,14 @@ unique_immut unique_immut::operator/(unique_immut &unique){
 	return unique_immut(obj);
 }
 Object* unique_immut::operator->(){
-    return _mgr->ptr;
+    return _mgr == nullptr ? nullptr : _mgr->ptr;
 }
 
 unique_immut& unique_immut::operator=(unique_immut& r){
-
-    if(get() != r.get()){
+    if(_mgr != r._mgr){
         release();
-		_mgr->ptr = new Object(r->get());
-		r.release();
+		_mgr = r._mgr;
+		r._mgr = nullptr;
     }
     return *this;
 }

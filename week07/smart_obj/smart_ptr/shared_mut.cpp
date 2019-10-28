@@ -23,7 +23,8 @@ shared_mut::~shared_mut() {
 
 void shared_mut::increase()
 {
-    _mgr->count++;
+	if(_mgr != nullptr)
+		_mgr->count++;
 }
 
 Object* shared_mut::get() const{
@@ -35,11 +36,9 @@ void shared_mut::release()
 		if (--_mgr->count == 0)
 		{
 			delete _mgr;
-			
 		}
 		_mgr = nullptr;
     }
-
 }
 
 int shared_mut::count()
@@ -68,13 +67,16 @@ shared_mut shared_mut::operator/(const shared_mut &shared)
 	return shared_mut(obj);
 }
 Object* shared_mut::operator->(){
-    return _mgr->ptr;
+	return _mgr == nullptr ? nullptr : _mgr->ptr;
 }
 shared_mut& shared_mut::operator=(const shared_mut &r)
 {
-    release();
-    _mgr = r._mgr;
-    increase();
+	if (_mgr != r._mgr) {
+		release();
+		_mgr = r._mgr;
+		increase();
+	}
+
     return *this;
 }
 

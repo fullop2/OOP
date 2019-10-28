@@ -62,9 +62,8 @@ Object* unique_immut::operator->(){
 }
 
 unique_immut& unique_immut::operator=(unique_immut& r){
-	unique_immut rhs = r;
 
-    if(get() != rhs.get()){
+    if(get() != r.get()){
         release();
 		_mgr->ptr = new Object(r->get());
 		r.release();

@@ -4,12 +4,12 @@ OBJECTS = object.o smart_obj.o shared_mut.o unique_immut.o
 CPP = object.cpp smart_obj.cpp shared_mut.cpp unique_immut.cpp
 
 CXX = g++
-CPPFLAGS = -std=c++11 -g -c 
+CPPFLAGS = -c 
 
 TARGET = test
 
 $(TARGET) : $(CPP)
-	$(CXX) -std=c++11 -g -c $(CPP)
+	$(CXX) -c $(CPP)
 
 clean :
 	rm -rf $(OBJECTS)

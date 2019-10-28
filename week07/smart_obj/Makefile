@@ -8,15 +8,14 @@ CXX = g++
 SMT_PTR = smart_ptr
 TARGET = test
 TEST = test_all
-CPPFLAGS = -std=c++11
 
 $(TARGET) : $(MAIN)
 	$(MAKE) -C $(SMT_PTR)
-	$(CXX) $(CPPFLAGS) -o $(TARGET) $(MAIN)
+	$(CXX) -o $(TARGET) $(MAIN)
 
 $(TEST) : $(TEST_FILE)
 	$(MAKE) -C $(SMT_PTR)
-	$(CXX) $(CPPFLAGS) -o $(TEST) $(TEST_FILE)
+	$(CXX) -o $(TEST) $(TEST_FILE)
 
 clean :
 	rm -rf $(MAIN) $(TARGET) $(TEST) $(TEST_FILE)

@@ -17,7 +17,7 @@ class bike
 
 		int get_bike_number() const;
 		char* get_bike_name() const;
-		const char* get_class() const;
+		const char* get_class_name() const override;
 
 		void set_bike_name(char*);
 		void set_bike_number(int);

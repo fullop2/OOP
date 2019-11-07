@@ -6,7 +6,7 @@ vehicle::vehicle(){
 vehicle::vehicle(int wheel_number, int max_speed){
 	set_wheel_number(wheel_number);
 	set_max_speed(max_speed);
-	//set_has_name(true);
+	set_has_name(false);
 }
 vehicle::vehicle(int wheel_number, int max_speed, bool has_name){
 	set_wheel_number(wheel_number);

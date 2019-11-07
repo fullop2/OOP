@@ -34,7 +34,7 @@ char* bike::get_bike_name() const
 	return bike_name;
 }
 
-const char* bike::get_class() const
+const char* bike::get_class_name() const
 {
 	return "bike";
 }

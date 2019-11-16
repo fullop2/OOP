@@ -16,6 +16,15 @@ int main() {
 		assert(test_int_sub() == 0);
 		assert(test_int_mul() == 0);
 		assert(test_int_div() == 0);
+		assert(test_float_add() == 0);
+		assert(test_float_sub() == 0);
+		assert(test_float_mul() == 0);
+		assert(test_float_div() == 0);
+		assert(test_comp_add() == 0);
+		assert(test_comp_sub() == 0);
+		assert(test_comp_mul() == 0);
+		assert(test_comp_div() == 0);
+	
 	}
     {
         Number *a = new Integer(13);
@@ -49,6 +58,6 @@ int main() {
 	} 
     // 테스트 코드 작성해보고 확인해보세요
     // 채점은 임의의 테스트코드로 진행할 예정입니다
-
+	std::cout << "test success" << std::endl;
     return 0;
 }

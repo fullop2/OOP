@@ -145,13 +145,13 @@ Number *Complex::div(Number * num) {
      */
 	if (num->types() == INTEGER) {
 		Integer* rhs = dynamic_cast<Integer*>(num);
-		set_val(real() + rhs->val(), imag());
+		set_val(real() / rhs->val(), imag() / rhs->val());
 		delete rhs;
 		return this;
 
     } else if (num->types() == FLOAT) {
 		Float* rhs = dynamic_cast<Float*>(num);
-		set_val(real() + rhs->val(), imag());
+		set_val(real() / rhs->val(), imag() / rhs->val());
 		delete rhs;
 		return this;
 

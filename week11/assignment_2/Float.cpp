@@ -160,13 +160,13 @@ Number *Float::div(Number *num) {
 
     if (num->types() == INTEGER) {
 		Integer* rhs = dynamic_cast<Integer*>(num);
-		set_val(value + rhs->val());
+		set_val(value / rhs->val());
 		delete rhs;
 		return this;
 
     } else if (num->types() == FLOAT) {
 		Float* rhs = dynamic_cast<Float*>(num);
-		rhs->set_val(value + rhs->val());
+		rhs->set_val(value / rhs->val());
 		delete this;
 		return rhs;
 

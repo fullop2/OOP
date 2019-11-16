@@ -48,7 +48,7 @@ int main() {
 	m.erase(first);
 	m.erase(fourth);
 
-    if (m.size() != 2 && (m["first"] == 10 || m["second"] == 40)) {
+    if (m.size() != 2 && (m["first"] == 10 || m["fourth"] == 40)) {
         cout<<"정해진 값을 삭제해주세요."<<endl;
         result += 1;
     }

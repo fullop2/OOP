@@ -7,11 +7,15 @@ json_list::json_list()
 json_object* json_list::parse(const char * string, int length)
 {
 	json_list* list = new json_list();
-	while(_index < length)
+	_index++; // '['
+	while(_index < length && string[_index] != ']')
 	{
 		json_object* object = json_object::parse(string,length);
 		list->v.push_back(object);
+		if(string[_index] == ']') {break;}
+		_index++; // ',' or ']'
 	}
+	_index++;
 	return list;
 }
 
@@ -35,7 +39,7 @@ std::string json_list::to_string()
 
 		if(it != v.end()-1)
 		{
-			r.append(",");
+			r.append(", ");
 		}
 	}
 	r.append("]");

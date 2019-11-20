@@ -19,7 +19,7 @@ void String::set_val(const std::string& str)
 
 json_object* String::parse(const char * string, int length, char base)
 {
-	int startIndex = _index;
+	int startIndex = ++_index;
 	while(base != string[_index]){_index++;}
 	int endIndex = _index++;
 

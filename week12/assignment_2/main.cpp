@@ -1,5 +1,9 @@
 #include <iostream>
 #include "json_object.h"
+#include "json_list.h"
+#include "json_dict.h"
+#include "data/String.h"
+#include "data/Integer.h"
 
 int main() {
     {
@@ -48,17 +52,59 @@ int main() {
         std::cout << tostr << std::endl;
     }
 
+    {
+        std::string str("[1, 2, 3, 4, 5]");
+        json_list* obj = dynamic_cast<json_list*>(json_object::parse(str));
+        for (int i = 0; i < 5; ++i) {
+            std::cout << (*obj)[i]->to_string() << ", ";
+        }
+        std::cout << std::endl;
+        std::string tostr = obj->to_string();
+        std::cout << tostr << std::endl;
+    }
+
+    {
+        std::string str("{'a': 'b', 'b': 'c', 'c': [1, 2, 3, [4], '5',], 1:3}");
+        json_dict* dict = dynamic_cast<json_dict*>(json_object::parse(str));
+        std::string key("a");
+        while (true) {
+            std::cout << key << ": ";
+            json_object* obj = (*dict)[key];
+            if (obj == nullptr) {
+                break;
+            }
+            std::cout << obj->to_string() << ", ";
+            if (obj->type() == 3) { // STRING
+                key = dynamic_cast<String*>(obj)->val();
+            } else {
+                break;
+            }
+        }
+        json_object* obj = (*dict)[1];
+        std::cout << 1 << ": ";
+        if (obj->type() == 2) { // INT
+            std::cout << dynamic_cast<Integer*>(obj)->val();
+        }
+        // dict public + []
+        std::cout << std::endl;
+        std::string tostr = dict->to_string();
+        std::cout << tostr << std::endl;
+    }
+
     /**
-    result
+        result
 
-    {'a': 'b'}
-    'a'
-    15
-    {'a': 'b', 14: 24, 'b': [13, 23, '3', 'abcdefg', '1,2,"3",4', [[[]], [[]]]], 'c': {'a': 'b', 'b': [12, 22, 32, 42, 52]}}
-    {'a': 'b', 14: 24, 'b': [13, 23, '3', 'abcdefg', '1,2,"3",4', [[[]], [[]]]], 'c': {'a': 'b', 'b': [12, 22, 32, 42, 52]}}
-    {14: 44}
-    {'a': 'This Assignment is easy'}
-
+        {'a': 'b'}
+        'a'
+        1
+        {'a': 'b', 1: 2, 'b': [1, 2, '3', 'abcdefg', '1,2,"3",4', [[[]], [[]]]], 'c': {'a': 'b', 'b': [1, 2, 3, 4, 5]}}
+        {'a': 'b', 1: 2, 'b': [1, 2, '3', 'abcdefg', '1,2,"3",4', [[[]], [[]]]], 'c': {'a': 'b', 'b': [1, 2, 3, 4, 5]}}
+        {1: 4}
+        {'a': 'This Assignment is easy'}
+        1, 2, 3, 4, 5,
+        [1, 2, 3, 4, 5]
+        a: 'b', b: 'c', c: [1, 2, 3, [4], '5'], 1: 3
+        {'a': 'b', 'b': 'c', 'c': [1, 2, 3, [4], '5'], 1: 3}
      */
     return 0;
 }

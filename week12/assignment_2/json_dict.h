@@ -8,15 +8,17 @@
 #include "json_object.h"
 #include <vector>
 
-class json_dict : json_object {
+class json_dict : public json_object {
 private:
     std::vector<std::pair<json_object*, json_object*> > v;
     void put(json_object* key, json_object* val);
-    int find(json_object* key) const;
+    int find(json_object* key);
 public:
     json_dict();
     static json_object* parse(const char *, int length);
     json_object* operator[](json_object* key) const;
+    json_object* operator[](const std::string& key) const;
+    json_object* operator[](int key) const;
 
     _type type();
     std::string to_string();

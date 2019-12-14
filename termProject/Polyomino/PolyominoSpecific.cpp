@@ -45,6 +45,14 @@ bool PolyominoFold::rotate()
 	}
 }
 
+bool PolyominoFold::checkValid(int x, int y) {
+	return pValid(x, y, BLOCK_COUNT, blockPosX, blockPosY);
+}
+void PolyominoFold::setPosition(int x, int y) {
+	pSetPosition(x, y, BLOCK_COUNT, blockPosX, blockPosY);
+}
+
+
 PolyominoTree::PolyominoTree(int x, int y, COLOR c1, COLOR c2, COLOR c3)
 	: Polyomino(x, y)
 {
@@ -84,6 +92,13 @@ bool PolyominoTree::rotate()
 
 }
 
+bool PolyominoTree::checkValid(int x, int y) {
+	return pValid(x, y, BLOCK_COUNT, blockPosX, blockPosY);
+}
+void PolyominoTree::setPosition(int x, int y) {
+	pSetPosition(x, y, BLOCK_COUNT, blockPosX, blockPosY);
+}
+
 PolyominoCross::PolyominoCross(int x, int y, COLOR c1, COLOR c2, COLOR c3, COLOR c4, COLOR c5)
 	: Polyomino(x, y)
 {
@@ -115,4 +130,11 @@ bool PolyominoCross::rotate()
 	}
 
 	return true;
+}
+
+bool PolyominoCross::checkValid(int x, int y) {
+	return pValid(x, y, BLOCK_COUNT, blockPosX, blockPosY);
+}
+void PolyominoCross::setPosition(int x, int y) {
+	pSetPosition(x, y, BLOCK_COUNT, blockPosX, blockPosY);
 }

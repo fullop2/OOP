@@ -2,32 +2,19 @@
 #include "Polyomino.h"
 #include "../Block/BlockManager.h"
 
-template <typename PolyType>
-bool PolyominoFactory::valid(int x, int y)
-{
-	for (int i = 0; i < PolyType::BLOCK_COUNT; i++)
-	{
-		int nx = x + PolyType::blockPosX[i];
-		int ny = y + PolyType::blockPosX[i];
-		if (BlockManager::get().getBlock(nx, ny) != nullptr) {			
-			return false;
-		}
-			
-	}
-	return true;
-}
+
 
 bool PolyominoFactory::createPolyomino(POLYOMINO type, int baseX, int baseY, LPPOLYOMINO * ppPolyomino)
 {
-	if (type == POLYOMINOTREE && valid<PolyominoTree>(baseX, baseY))
+	if (type == POLYOMINOTREE)
 	{
 		*ppPolyomino = new PolyominoTree(baseX, baseY, getColorRand(), getColorRand(), getColorRand());
 	}
-	else if (type == POLYOMINOFOLD && valid<PolyominoFold>(baseX, baseY))
+	else if (type == POLYOMINOFOLD)
 	{
 		*ppPolyomino = new PolyominoFold(baseX, baseY, getColorRand(), getColorRand(), getColorRand());
 	}
-	else if (type == POLYOMINOCROSS && valid<PolyominoCross>(baseX, baseY))
+	else if (type == POLYOMINOCROSS)
 	{
 		*ppPolyomino = new PolyominoCross(baseX, baseY, getColorRand(), getColorRand(), getColorRand(), getColorRand(), getColorRand());
 	}

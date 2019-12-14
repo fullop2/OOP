@@ -1,15 +1,19 @@
 #pragma once
 #include "stdafx.h"
-#include "System/time.h"
+
 
 class Game
 {
 private:
 
 	LPPOLYOMINO currentPolyomino;
+	LPPOLYOMINO nextPolyomino;
+
 	bool canMove;
 
-	gametime lastUpdatedTime;
+	static const int nextPolyominoX;
+	static const int nextPolyominoY;
+
 
 	void drawBoard();
 
@@ -25,10 +29,11 @@ private:
 
 	void setConsoleColor(COLOR color);
 
-	void update();
+	
 public:
 	Game();
 	~Game();
-	void init();
+	//void init();
+	void update();
 };
 

@@ -97,3 +97,25 @@ void Polyomino::update()
 		drop();
 	}
 }
+
+
+bool Polyomino::pValid(int x, int y, int count, const int posX[], const int posY[]) {
+	for (int i = 0; i < count; i++)
+	{
+		int nx = x + posX[i];
+		int ny = y + posY[i];
+		if (BlockManager::get().getBlock(nx, ny) != nullptr) {
+			return false;
+		}
+	}
+	return true;
+}
+void Polyomino::pSetPosition(int x, int y, int count, const int posX[], const int posY[]) {
+	for (int i = 0; i < count; i++)
+	{
+		int nx = x + posX[i];
+		int ny = y + posY[i];
+		BlockManager::get().setBlock(blocks[i]->getX(), blocks[i]->getY(), nullptr);
+		blocks[i]->setPosition(nx, ny);
+	}
+}

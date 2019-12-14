@@ -1,4 +1,5 @@
 #include "testcase.h"
+/*
 void test::test1_combo14()
 {
 BlockManager::get().setBlock(0, 14, BlockManager::get().newBlock(GREEN, 0, 14));
@@ -87,4 +88,4 @@ BlockManager::get().setBlock(0, 3, BlockManager::get().newBlock(YELLOW, 0, 3));
 //BlockManager::get().setBlock(3, 3, BlockManager::get().newBlock(GRAY, 3, 3));
 BlockManager::get().setBlock(4, 3, BlockManager::get().newBlock(YELLOW, 4, 3));
 BlockManager::get().setBlock(5, 3, BlockManager::get().newBlock(RED, 5, 3));
-}
+}*/

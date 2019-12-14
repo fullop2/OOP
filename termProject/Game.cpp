@@ -9,44 +9,43 @@
 #include "Polyomino/Polyomino.h"
 #include "Polyomino/PolyominoFactory.h"
 
+#include "System/time.h"
 #include "System/Input.h"
 #include "System/View.h"
 #include "System/sys.h"
 
+const int Game::nextPolyominoX = 6;
+const int Game::nextPolyominoY = 6;
 
 Game::Game()
 {
 	setlocale(LC_CTYPE, "");
-
 	sys::hideCursor();
 	canMove = true;
 	currentPolyomino = nullptr;
-	lastUpdatedTime = Time::getNowTime();
+	PolyominoFactory::createPolyomino(getPolyRand(), nextPolyominoX, nextPolyominoY, &nextPolyomino);
 }
 Game::~Game()
 {
 	sys::showCursor();
 }
 
-void Game::init()
-{
-	update();
-}
-
 bool Game::asyncDelay(double delay)
 {
-	if (Time::getElapsed(lastUpdatedTime).count() < delay) { return false; }
-	lastUpdatedTime = Time::getNowTime();
+	static gametime asyncLastUpdatedTime = Time::getNowTime();
+	if (Time::getElapsed(asyncLastUpdatedTime).count() < delay) { return false; }
+	asyncLastUpdatedTime = Time::getNowTime();
 	return true;
 }
 void Game::syncDelay(double delay)
 {
-	while (Time::getElapsed(lastUpdatedTime).count() < delay);
-	lastUpdatedTime = Time::getNowTime();
+	gametime startTime = Time::getNowTime();
+	while (Time::getElapsed(startTime).count() < delay);
 }
 
 void Game::asyncDropAll()
 {
+	asyncDelay(0.2);
 	while (1)
 	{
 		if (asyncDelay(0.2) && !dropNotPlacedBlocks())
@@ -70,9 +69,11 @@ void Game::setConsoleColor(COLOR color)
 	case BLUE:
 		sys::consoleColorBlue();
 		break;
+		/*
 	case YELLOW:
 		sys::consoleColorYellow();
 		break;
+		*/
 	case GRAY:
 		sys::consoleColorGray();
 		break;
@@ -112,10 +113,15 @@ void Game::update()
 		{
 			ScoreManager::get().increaseCombo();
 			ScoreManager::get().calc();
-			syncDelay(0.2);
+			syncDelay(0.4);
 			render();
 
 			asyncDropAll();
+		}
+		while (1) {
+			if (asyncDelay(0.2)) break;
+			syncDelay(0.1);
+			render();
 		}
 		ScoreManager::get().clearColorCount();
 		ScoreManager::get().clearCombo();
@@ -127,7 +133,18 @@ bool Game::newPolyomino()
 {
 	int x = 2;
 	int y = START_H+1;
-	return PolyominoFactory::createPolyomino(getPolyRand(), x, y, &currentPolyomino);
+
+	currentPolyomino = nextPolyomino;
+	
+
+	if (currentPolyomino->checkValid(x, y)) {
+		currentPolyomino->setPosition(x, y);
+		PolyominoFactory::createPolyomino(getPolyRand(), nextPolyominoX, nextPolyominoY, &nextPolyomino);
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 bool Game::moveCurrentPolyomino()
@@ -219,14 +236,50 @@ void Game::jointColorSet()
 void Game::drawBoard()
 {
 	View::printBoardHeader();
+	View::printString(std::wstring(L"--NEXT--"));
+	View::printReturn();
 	const Board& board = BlockManager::get().getBoard();
-	for (auto i = 4; i < H; i++)
+
+	for (auto i = 4; i < 12; i++)
 	{
 		auto& row = board[i];
 		sys::consoleColorWhite();
 		View::printBoardSide();
-		for (auto& pBlock : row)
+		for (auto j = 0; j < W; j++)
 		{
+			auto& pBlock = row[j];
+			if (pBlock == nullptr) {
+				View::printBlank();
+			}
+			else {
+				setConsoleColor(pBlock->getColor());
+				View::printBlock();
+			}
+		}
+		sys::consoleColorWhite();
+		View::printBoardSide();
+		for (auto j = W; j < W+EXTRA_WIDTH; j++)
+		{
+			auto& pBlock = row[j];
+			if (pBlock == nullptr) {
+				View::printBlank();
+			}
+			else {
+				setConsoleColor(pBlock->getColor());
+				View::printBlock();
+			}
+		}
+		View::printReturn();
+
+	}
+	for (auto i = 12; i < H; i++)
+	{
+		auto& row = board[i];
+		sys::consoleColorWhite();
+		View::printBoardSide();
+		for (auto j = 0; j < W; j++)
+		{
+			auto& pBlock = row[j];
 			if (pBlock == nullptr) {
 				View::printBlank();
 			}
@@ -240,19 +293,23 @@ void Game::drawBoard()
 		View::printReturn();
 	}
 	View::printBoardFooter();
+	View::printReturn();
 
 	View::printBoardHeader();
+	View::printReturn();
 	View::printBoardSide();
 	View::printScore(ScoreManager::get().getScore());
 	View::printBoardSide();
 	View::printReturn();
 	View::printBoardFooter();
+	View::printReturn();
 
 	if (ScoreManager::get().getCombo() > 0)
 	{
 		static int i = -1;
 		i = (i + 1) % (int)COLOR::GRAY;
 		View::printBoardHeader();
+		View::printReturn();
 		View::printBoardSide();
 		setConsoleColor((COLOR)i);
 		View::printCombo(ScoreManager::get().getCombo());
@@ -260,6 +317,7 @@ void Game::drawBoard()
 		View::printBoardSide();
 		View::printReturn();
 		View::printBoardFooter();
+		View::printReturn();
 	}
 	else {
 		for(int i = 0; i < 3; i++)

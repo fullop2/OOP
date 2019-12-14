@@ -16,7 +16,8 @@ using std::array;
 const int START_H = 3;
 const int START_W = 0;
 
-const int W = 6;
+const int W = 5;
+const int EXTRA_WIDTH = 7;
 const int H = 12 + START_H + 1;
 
 const int dx[4] = { 1,0,-1,0 };
@@ -25,10 +26,10 @@ const int dy[4] = { 0,1,0,-1 };
 typedef ColorSet* LPCOLORSET;
 typedef Block* LPBLOCK;
 typedef Polyomino* LPPOLYOMINO;
-typedef array< array<LPBLOCK, W>, H> Board;
+typedef array< array<LPBLOCK, W + EXTRA_WIDTH>, H> Board;
 
 enum COLOR {
-	RED, BLUE, GREEN, YELLOW, GRAY, COLOREND
+	RED, BLUE, GREEN, GRAY, COLOREND
 };
 enum POLYOMINO
 {

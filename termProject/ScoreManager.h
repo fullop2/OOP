@@ -19,7 +19,7 @@ private:
 
 	unsigned int comboPoint[INDEX_OF_COMBO_POINT_MAX] = {0,8,16,32,64,96,128,160,192,224,256,288,320,352,388,416,448,480,512};
 	unsigned int colorCountPoint[INDEX_OF_COLOR_COUNT_POINT_MAX] = { 0,2,3,4,5,6,7,10 };
-	unsigned int multiPoint[INDEX_OF_MULTI_POINT_MAX] = { 0,3,6,12,24 };
+	unsigned int multiPoint[INDEX_OF_MULTI_POINT_MAX] = { 0,3,6,12/*,24*/ };
 
 	unsigned int calcTotalCount();
 	unsigned int calcComboPoint();

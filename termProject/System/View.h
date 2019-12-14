@@ -20,6 +20,7 @@ public:
 	static void printReturn();
 	static void printBlankLine();
 
+	static void printString(std::wstring);
 	static void printCombo(unsigned combo);
 	static void printScore(unsigned score);
 };

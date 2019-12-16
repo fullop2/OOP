@@ -10,6 +10,7 @@ bool PolyominoFactory::createPolyomino(POLYOMINO type, int baseX, int baseY, LPP
 	{
 		*ppPolyomino = new PolyominoTree(baseX, baseY, getColorRand(), getColorRand(), getColorRand());
 	}
+
 	else if (type == POLYOMINOFOLD)
 	{
 		*ppPolyomino = new PolyominoFold(baseX, baseY, getColorRand(), getColorRand(), getColorRand());

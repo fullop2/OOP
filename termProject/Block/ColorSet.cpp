@@ -43,6 +43,9 @@ void ColorSet::explodeBlocks()
 						{
 							neighborColorSet->explodeBlocks();
 						}
+						else if(neighborColorSet == nullptr && neighborBlock->getColor() == COLOR::GRAY){
+							BlockManager::get().removeBlock(neighborBlock);
+						}
 					}
 				}
 			}
@@ -50,7 +53,6 @@ void ColorSet::explodeBlocks()
 	}
 
 	/* delete this color set blocks */
-	auto& allblocks = BlockManager::get().getBlocks();
 	auto itBlock = blocks.begin();
 	while (itBlock != blocks.end())
 	{

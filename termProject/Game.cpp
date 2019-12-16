@@ -50,10 +50,10 @@ void Game::asyncDropAll()
 	{
 		if (asyncDelay(0.2) && !dropNotPlacedBlocks())
 		{
-			jointColorSet();
 			break;
 		}
 	}
+	jointColorSet();
 }
 
 void Game::setConsoleColor(COLOR color)

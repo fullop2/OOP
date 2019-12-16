@@ -32,5 +32,5 @@ clean:
 	do \
 		$(MAKE) -C $$d clean; \
 	done
-	\rm -rf $(TARGET) $(GAME) main.o
+	\rm -rf $(TARGET) $(GAME)
 

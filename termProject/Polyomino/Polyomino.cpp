@@ -53,7 +53,7 @@ void Polyomino::drop()
 	auto lowestDropCount = H;
 	for (auto pBlock : blocks)
 	{
-		auto lowestCurrent = 0;
+		auto lowestCurrent = -1;
 		while (!pBlock->isPlaced())
 		{
 			pBlock->down();

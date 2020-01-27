@@ -193,7 +193,7 @@ bool Game::explode()
 		if ((*itSet)->size() >= 4 && (*itSet)->getColor() != COLOR::GRAY)
 		{
 			pColorSet->explodeBlocks();
-			itSet = BlockManager::get().removeColorSet(pColorSet);//colorSets.erase(itSet);
+			itSet = BlockManager::get().removeColorSet(pColorSet);
 			exploded = true;
 		}
 		else
@@ -206,7 +206,7 @@ bool Game::explode()
 		auto pColorSet = *itSet;
 		if ((*itSet)->size() == 0)
 		{
-			itSet = BlockManager::get().removeColorSet(pColorSet);//colorSets.erase(itSet);
+			itSet = BlockManager::get().removeColorSet(pColorSet);
 		}
 		else
 		{

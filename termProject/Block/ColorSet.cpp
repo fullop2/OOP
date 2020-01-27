@@ -15,9 +15,9 @@ void ColorSet::addBlock(LPBLOCK pBlock)
 {
 	blocks.insert(pBlock);
 }
-void ColorSet::removeBlock(const LPBLOCK pBlock)
+unordered_set<LPBLOCK>::const_iterator ColorSet::removeBlock(const LPBLOCK pBlock)
 {
-	blocks.erase(pBlock);
+	return blocks.erase(blocks.find(pBlock));
 }
 
 void ColorSet::explodeBlocks()
@@ -41,10 +41,14 @@ void ColorSet::explodeBlocks()
 						auto neighborColorSet = neighborBlock->getColorSet();
 						if (neighborColorSet != this && neighborColorSet != nullptr && neighborColorSet->getColor() == COLOR::GRAY)
 						{
-							neighborColorSet->explodeBlocks();
-						}
-						else if(neighborColorSet == nullptr && neighborBlock->getColor() == COLOR::GRAY){
-							BlockManager::get().removeBlock(neighborBlock);
+							auto itBlock = neighborColorSet->getBlocks().begin();
+							while (itBlock != neighborColorSet->getBlocks().end()) {
+								(*itBlock)->setColorSet(nullptr);
+								addBlock(*itBlock);
+								itBlock = neighborColorSet->removeBlock(*itBlock);
+							}
+							BlockManager::get().removeColorSet(neighborColorSet);
+
 						}
 					}
 				}

@@ -18,6 +18,6 @@ public:
 	unordered_set<LPBLOCK>& getBlocks();
 
 	void addBlock(const LPBLOCK pBlock);
-	void removeBlock(const LPBLOCK pBlock);
+	unordered_set<LPBLOCK>::const_iterator removeBlock(const LPBLOCK pBlock);
 	void explodeBlocks();
 };
